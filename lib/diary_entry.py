@@ -3,6 +3,8 @@ class DiaryEntry:
         self.title = title
         self.contents = contents
         self.wordcount = len(contents.split())
+        self.words = self.contents.split()
+        self.startingpoint = 0
         
 
     def format(self):
@@ -23,14 +25,14 @@ class DiaryEntry:
         return self.wordcount/wpm
 
     def reading_chunk(self, wpm, minutes):
-        start_chunk = (self.contents.split())[0] 
-        reading_capacity = wpm * minutes 
-        calculation = (self.contents.split())[0:reading_capacity]
-        words_read = " ".join(calculation)
-        last_word_read =(words_read.split())[-1] #hello
-        previous_chunk = self.contents.index(last_word_read) #2
-        next_chunk = self.contents[previous_chunk:-1]
-        return next_chunk
+        reading_capacity = wpm * minutes
+        if self.startingpoint > len(self.words):
+            self.startingpoint = 0
+        start = self.startingpoint 
+        end = start + reading_capacity
+        read = self.words[start:end]
+        self.startingpoint = end
+        return " ".join(read)
         # Parameters
         #   wpm: an integer representing the number of words the user can read
         #        per minute

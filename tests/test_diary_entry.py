@@ -32,10 +32,16 @@ def test_reading_chunk_once():
     assert result == "Hello world hello"
 
 #Scenario 5: reading_chunk called twice
-def test_reading_chunk_once():
+def test_reading_chunk_twice():
     diary_entry = DiaryEntry('Monday', 'Hello world hello world hello world')
-    once = diary_entry.reading_chunk(3,1)
-    assert once == "Hello world hello"
-    twice = diary_entry.reading_chunk(3,1)
-    assert twice == "world hello world"
+    assert diary_entry.reading_chunk(3,1) == "Hello world hello"
+    assert diary_entry.reading_chunk(3,1) == "world hello world"
 
+
+#Scenario 6: Reading_chunk called multiple times repeating the chunk from beginning
+def test_reading_chunk_multiplt():
+    diary_entry = DiaryEntry('Monday', 'Hello world hello world hello world')
+    assert diary_entry.reading_chunk(3,1) == "Hello world hello"
+    assert diary_entry.reading_chunk(2,1) == "world hello"
+    assert diary_entry.reading_chunk(3,1) == "world"
+    assert diary_entry.reading_chunk(2,2) == "Hello world hello world"
